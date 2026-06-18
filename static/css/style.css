@@ -317,6 +317,69 @@ code {
 }
 
 /* ============================================
+   EXPLANATION TABLE (Análise do Assembly)
+   ============================================ */
+.explanation-table-container {
+    width: 100%;
+    overflow-x: auto;
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+    margin-top: 1.5rem;
+}
+
+.explanation-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.explanation-table thead {
+    background-color: #0b0f19;
+    border-bottom: 2px solid #39ff14;
+}
+
+.explanation-table th {
+    padding: 1rem;
+    color: #39ff14;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+}
+
+.explanation-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.explanation-table tbody tr:hover {
+    background-color: rgba(57, 255, 20, 0.05);
+}
+
+.explanation-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.asm-code {
+    width: 35%;
+    white-space: nowrap;
+}
+
+.asm-code code {
+    background-color: transparent;
+    color: #00e5ff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0;
+}
+
+.asm-desc {
+    color: #e0f7fa;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* ============================================
    RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 1024px) {

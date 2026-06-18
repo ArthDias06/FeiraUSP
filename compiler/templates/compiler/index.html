@@ -58,6 +58,19 @@
                     </div>
                 </div>
             </div>
+
+            <div class="interactive-section" id="explanation-section" style="display: none; margin-bottom: 3rem; width: 100%;">
+                <div class="header">
+                    <h2>Tradução Passo a Passo do Assembly</h2>
+                </div>
+                <div class="instruction-box" style="border-left-color: #39ff14; background-color: rgba(57, 255, 20, 0.05); width: 100%; border-radius: 8px;">
+                    <p style="color: #b3b3b3;">
+                        Abaixo está a análise linha a linha das instruções físicas geradas pelo compilador. Descubra o que a Unidade de Controle do processador fará a cada etapa.
+                    </p>
+                </div>
+                <div id="explanation-content" class="explanation-table-container">
+                    </div>
+            </div>
         </div>
 
         <div class="content">
@@ -264,7 +277,7 @@ int main() {
             let activeDecorationsAsm = [];
 
             // ========================================
-            // COMPILATION
+            // COMPILATION & EXPLANATION
             // ========================================
             const compileBtn = document.getElementById('compile-btn');
             compileBtn.addEventListener('click', handleCompile);
@@ -297,6 +310,9 @@ int main() {
                         asmEditor.setValue(data.assembly);
                         highlightSourceLines(data.assembly);
                         clearBidirectionalHighlight();
+                        
+                        // Renderiza a tabela de explicação
+                        renderExplanations(data.explanations);
                     })
                     .catch((error) => {
                         errorDiv.innerText = error.message;
@@ -306,6 +322,33 @@ int main() {
                         compileBtn.innerText = originalText;
                         compileBtn.style.opacity = "1";
                     });
+            }
+
+            function renderExplanations(explanations) {
+                const section = document.getElementById('explanation-section');
+                const content = document.getElementById('explanation-content');
+                
+                if (!explanations || explanations.length === 0) {
+                    section.style.display = 'none';
+                    return;
+                }
+                
+                let html = '<table class="explanation-table">';
+                html += '<thead><tr><th>Instrução em Assembly</th><th>Ação Realizada no Processador</th></tr></thead>';
+                html += '<tbody>';
+                
+                explanations.forEach(item => {
+                    html += `
+                        <tr>
+                            <td class="asm-code"><code>${item.instruction}</code></td>
+                            <td class="asm-desc">${item.explanation}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table>';
+                content.innerHTML = html;
+                section.style.display = 'block';
             }
 
             function highlightSourceLines(assembly) {
