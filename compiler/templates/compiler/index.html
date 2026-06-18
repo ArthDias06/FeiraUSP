@@ -1,167 +1,237 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Feira USP</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Níveis de Abstração: Da Linguagem C ao Binário</title>
 </head>
 
 <body>
     <main>
         <div id="titulo"> 
-            <h1>Como o computador transforma linguagem de alto nível em
-                assembly e depois em linguagem de máquina?
-            </h1>
+            <h1>De Palavras para Eletricidade: Os Níveis de Abstração</h1>
         </div>
 
         <div class="content">
-            <h2>A Jornada do Código</h2>
+            <h2>A Realidade Física do Hardware</h2>
             <p>
-                Os computadores são incapazes de compreender diretamente as linguagens de programação que utilizamos no dia a dia. 
-                Para que um programa escrito em uma sintaxe humana funcione, ele precisa passar por um processo rigoroso de tradução. 
-                Essa transformação ocorre em etapas, reduzindo gradualmente a abstração do código até que ele se torne um conjunto de instruções puramente numéricas que o processador consiga executar.
+                O processador de um computador é um circuito integrado composto por bilhões de transistores microscópicos. Do ponto de vista físico, esses componentes atuam estritamente como interruptores elétricos, possuindo apenas dois estados possíveis: presença de tensão elétrica (representada pelo bit 1) ou ausência de tensão elétrica (representada pelo bit 0). Esta é a <strong>Linguagem de Máquina</strong>.
+            </p>
+            <p>
+                Como programar diretamente em cadeias binárias de 0s e 1s tornaria inviável o desenvolvimento de sistemas complexos, a engenharia de software baseia-se em <strong>Níveis de Abstração</strong>. Criamos as <strong>Linguagens de Alto Nível</strong> (como C, C++ ou Java), que utilizam sintaxe legível por humanos e estruturas lógicas complexas. A conversão de um nível para o outro é realizada de forma inteiramente mecânica por um software chamado compilador.
             </p>
         </div>
 
-        <div class = "content">
-            <h2>Do alto nível ao Assembly</h2>
+        <div class="instruction-box">
+            <h3>Mapeamento Bidirecional de Código</h3>
             <p>
-                Para converter uma linguagem de alto nível para Assembly, o compilador precisa passar por 4 etapas base, descritas abaixo, para poder fornecer
-                um código funcional da linguagem de baixo nível.
+                O simulador abaixo demonstra visualmente a correspondência entre dois níveis de abstração distintos: o código fonte estruturado e as instruções primitivas do processador.
+                <br><br>
+                1. Clique em "Compilar para RISC-V" para processar o código. <br>
+                2. Selecione qualquer linha de instrução na janela da esquerda (Linguagem C) para destacar, na janela da direita, o bloco equivalente em Assembly RISC-V.
             </p>
-            <p>
-                Tendo como base a linguagem C, podemos utilizar de um coamndo do terminal para realizar essa conversão e mostrar ao usuário o código gerado:
-            </p>
-            <div id="comando">
-                <p>
-                    gcc -S programa.c
-                </p>
+        </div>
+
+        <div class="interactive-section">
+            <div class="header">
+                <h2>Visualizador de Arquitetura RISC-V</h2>
+                <button class="btn" id="compile-btn">Compilar para RISC-V</button>
             </div>
+
+            <div id="error-msg"></div>
+
+            <div class="editor-container">
+                <div class="editor-box">
+                    <h3>Código Fonte (Alto Nível - Linguagem C)</h3>
+                    <div class="editor-wrapper">
+                        <div id="c-editor" class="editor"></div>
+                    </div>
+                </div>
+                <div class="editor-box">
+                    <h3>Código Gerado (Baixo Nível - Assembly RISC-V)</h3>
+                    <div class="editor-wrapper">
+                        <div id="asm-editor" class="editor"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>O Processo de Compilação: Do Alto Nível ao Assembly</h2>
             <p>
-                Seguindo a instrução acima, o compilador segue as seguintes operações para gerar o código Assembly:
+                Para reduzir a abstração do código original e aproximá-lo do hardware, o compilador decompõe a lógica humana através de quatro fases sequenciais. No terminal de desenvolvimento, essa conversão inicial isolada pode ser disparada através do utilitário GCC utilizando a flag correspondente:
             </p>
+            
+            <p class="comando-label">Comando para interromper o processo na etapa de geração de Assembly:</p>
+            <div id="comando">
+                <p>gcc -S programa.c</p>
+            </div>
+
+            <p>Abaixo estão descritas as operações internas executadas por este comando:</p>
             <div id="sequencia">
                 <div class="card">
                     <h3>1. Pré-processamento</h3>
                     <p>
-                        Nessa etapa, o compilador remove os comentários dos códigos e interpreta os macros, mudando as constantes definidas com <u><i>#define</i></u>
-                        e incluindo os arquivos dos <u><i>#include</i></u>.
+                        Manipulação direta do texto. O compilador remove comentários e substitui as constantes definidas no código por seus valores reais.
+                        <br><br>
+                        <strong>Exemplo:</strong> A linha <code>#define PI 3.14</code> é apagada, e todo lugar escrito <code>PI</code> no código vira o número <code>3.14</code>.
                     </p>
                 </div>
                 <i class="arrow right"></i>
                 <div class="card">
-                    <h3>2. Análise sintática</h3>
+                    <h3>2. Análise Sintática</h3>
                     <p>
-                        Verificação do código, nessa parte ocorre o encontro de erros e os comandos são mapeados e ordenados para que a lógica seja seguida como
-                        o esperado.
+                        Validação gramatical e estrutural. Os tokens do código são mapeados para garantir que as regras da linguagem foram rigorosamente seguidas.
+                        <br><br>
+                        <strong>Exemplo:</strong> Se você digitar <code>int a = 5</code> e esquecer o ponto e vírgula, esta etapa acusa o erro e bloqueia o processo.
                     </p>
                 </div>
                 <i class="arrow right"></i>
                 <div class="card">
                     <h3>3. Otimização</h3>
                     <p>
-                        Nessa etapa, o compilador procura formas melhores de executar certas funções sem quebrar a lógica do progrma, garantindo maior rapidez
-                        e eficiência.
+                        Reorganização lógica do fluxo. O compilador analisa a árvore de instruções e reescreve blocos ineficientes, eliminando redundâncias para diminuir o tempo de execução.
+                        <br><br>
+                        <strong>Exemplo:</strong> Uma variável declarada como <code>int x = 2 + 3;</code> é diretamente substituída por <code>x = 5;</code>, poupando a CPU de realizar o cálculo.
                     </p>
                 </div>
                 <i class="arrow right"></i>
                 <div class="card">
-                    <h3>4. Conversão</h3>
+                    <h3>4. Geração de Código</h3>
                     <p>
-                        Por fim, o compilador traduz o código otimizado em linguagem de baixo nível, Assembly, transformando
-                        cada instrução em diferentes linhas da linguagem.
+                        A lógica purificada é convertida nas instruções mnemônicas da arquitetura alvo (Assembly), mapeando o fluxo de dados.
+                        <br><br>
+                        <strong>Exemplo:</strong> O comando <code>soma = a + b</code> é traduzido para a instrução em Assembly equivalente, como <code>add a0, a1, a2</code>.
                     </p>
                 </div>
             </div>
         </div>
 
         <div class="content">
-            <h2>Do Assembly à linguagem de máquina</h2>
+            <h2>A Montagem Final: Do Assembly à Linguagem de Máquina</h2>
             <p>
-                Agora que temos o Assembly do código, precisamos entender como ele é transformado em linguagem de máquina. Para isso, é utilizado do
-                montador, ou <i>assembler</i>.
+                O código Assembly resultante ainda utiliza caracteres textuais legíveis. Para que a CPU processe a instrução, um programa chamado <strong>Montador</strong> (Assembler) precisa mapear esse texto para códigos estritamente numéricos.
             </p>
-            <p>
-                Toda instrução em Assembly possui uma codificação em binário(0s e 1s), que representa a operação e, caso necessário,
-                os valores imaediatos e registradores usados. Dessa forma, o montador segue uma série de passos para definir o comando a ser feito e
-                quais valores utilizar.
-            </p>
+            
             <div id="sequencia">
                 <div class="card">
-                    <h3>1. Leitura do Opcode</h3>
+                    <h3>1. Decodificação do Opcode</h3>
                     <p>
-                        O montador identifica a operação desejada a partir do Opcode(código de operação) e transforma o comando em seu binário equivalente.
+                        O montador identifica o mnemônico textual da operação e o substitui pelo seu equivalente binário exato, conhecido como Código de Operação.
+                        <br><br>
+                        <strong>Exemplo:</strong> O texto <code>add</code> (somar) é convertido para o seu código de máquina real, como <code>0110011</code>.
                     </p>
                 </div>
                 <i class="arrow right"></i>
                 <div class="card">
-                    <h3>2. Tradução dos operandos</h3>
+                    <h3>2. Mapeamento de Operandos</h3>
                     <p>
-                        Além da conversão do Opcode para binário, o monttador é responsável pela transformação de registradores, endereços de memória e
-                        valores numéricos em formatos binários que representem o dado.
+                        As variáveis lógicas do programa são convertidas em referências físicas de registradores internos da CPU e endereços de memória RAM.
+                        <br><br>
+                        <strong>Exemplo:</strong> O nome do registrador <code>a0</code> é substituído pelo seu identificador físico em binário, como o endereço <code>01010</code>.
                     </p>
                 </div>
                 <i class="arrow right"></i>
                 <div class="card">
-                    <h3>3. Cálculo dos endereços</h3>
+                    <h3>3. Resolução de Endereços</h3>
                     <p>
-                        Calcula a distância dos endereços de memória necessários durante a operação por meio da determinação de posições de memórias para
-                        <i>labels</i> e <i>jumps</i>.
+                        O montador calcula os deslocamentos binários necessários para instruções de desvio (saltos e loops), definindo os destinos exatos na memória.
+                        <br><br>
+                        <strong>Exemplo:</strong> Uma tag que diz "volte para o início do loop" é substituída pela distância exata, como "recue 16 bytes na memória".
                     </p>
                 </div>
             </div>
+        </div>
+
+        <div class="content">
+            <h2>Anatomia de uma Instrução na Memória</h2>
+            <p>
+                Para ilustrar o resultado final de todo esse processo, vamos analisar como uma simples soma matemática é estruturada fisicamente na memória RAM antes de ser processada.
+            </p>
+            <p>
+                <strong>Linguagem C:</strong> <code>int soma = a + b;</code><br>
+                <strong>Assembly RISC-V:</strong> <code>add a0, a1, a2</code> <em>(Soma o valor do registrador a1 com o a2 e guarda o resultado em a0)</em>
+            </p>
+            <p>
+                Na arquitetura RISC-V de 32 bits, essa única instrução de texto é convertida pelo montador em uma "palavra" (word) binária de exatos 32 bits de comprimento. Cada segmento desse número possui uma função estrita de acionamento de hardware:
+            </p>
+
+            <div style="overflow-x: auto; margin: 1.5rem 0; background-color: #000000; border: 1px solid #39ff14; border-radius: 6px; box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);">
+                <table style="width: 100%; min-width: 600px; text-align: center; border-collapse: collapse; color: #39ff14; font-family: 'Courier New', Courier, monospace;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #39ff14; font-size: 0.95rem; color: #b3b3b3;">
+                            <th style="padding: 12px; width: 20%;">funct7<br><small>(7 bits)</small></th>
+                            <th style="padding: 12px; width: 15%;">rs2 (Origem 2)<br><small>(5 bits)</small></th>
+                            <th style="padding: 12px; width: 15%;">rs1 (Origem 1)<br><small>(5 bits)</small></th>
+                            <th style="padding: 12px; width: 15%;">funct3<br><small>(3 bits)</small></th>
+                            <th style="padding: 12px; width: 15%;">rd (Destino)<br><small>(5 bits)</small></th>
+                            <th style="padding: 12px; width: 20%;">opcode<br><small>(7 bits)</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="font-size: 1.25rem; font-weight: bold;">
+                            <td style="padding: 15px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">0000000</td>
+                            <td style="padding: 15px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">01100</td>
+                            <td style="padding: 15px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">01011</td>
+                            <td style="padding: 15px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">000</td>
+                            <td style="padding: 15px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">01010</td>
+                            <td style="padding: 15px;">0110011</td>
+                        </tr>
+                        <tr style="font-size: 0.85rem; color: #a3a3a3; border-top: 1px solid rgba(57, 255, 20, 0.2);">
+                            <td style="padding: 8px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">Modificador ADD</td>
+                            <td style="padding: 8px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">Reg. a2 (x12)</td>
+                            <td style="padding: 8px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">Reg. a1 (x11)</td>
+                            <td style="padding: 8px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">Tipo ADD</td>
+                            <td style="padding: 8px; border-right: 1px dashed rgba(57, 255, 20, 0.3);">Reg. a0 (x10)</td>
+                            <td style="padding: 8px;">Operação Base</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>
+                Toda instrução Assembly executável é armazenada sequencialmente na memória RAM exatamente com esse formato numérico de 32 zeros e uns.
+            </p>
+            <p>
+                Durante a execução, o processador busca essa linha binária na memória. O circuito interno responsável por interceptar e interpretar esses números é a <strong>Unidade de Controle</strong>. Ela faz a leitura do <code>opcode</code> e dos campos de função (<code>funct3</code> e <code>funct7</code>) para decodificar fisicamente a ação necessária. 
+            </p>
+            <p>
+                Ao identificar o código da soma, a Unidade de Controle envia sinais elétricos que ativam a <strong>Unidade Lógica Aritmética (ULA)</strong> para processar a adição, abre os transistores de leitura dos registradores de origem (<code>rs1</code> e <code>rs2</code>) para extrair os dados, e finalmente libera a via de gravação elétrica para armazenar o resultado no registrador de destino (<code>rd</code>).
+            </p>
         </div>
     </main>
 
-    <div class="header">
-        <h2>RISC-V Assembly Visualizer</h2>
-        <button class="btn" id="compile-btn">Compile to RISC-V</button>
-    </div>
-
-    <div id="error-msg"></div>
-
-    <div class="editor-container">
-        <div class="editor-box">
-            <h3>C Code</h3>
-            <div class="editor-wrapper">
-                <div id="c-editor" class="editor"></div>
-            </div>
-        </div>
-        <div class="editor-box">
-            <h3>RISC-V Assembly (with Source Comments)</h3>
-            <div class="editor-wrapper">
-                <div id="asm-editor" class="editor"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Monaco Editor Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs/loader.min.js"></script>
 
     <script>
-        // Configure Monaco loader
         require.config({
             paths: {
                 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs'
             }
         });
 
-        // Initialize editors after Monaco loads
         require(['vs/editor/editor.main'], function () {
 
             // ========================================
             // INITIALIZATION
             // ========================================
-            const DEFAULT_CODE = `int main() {
+            const DEFAULT_CODE = `// Ponto de entrada do fluxo de execucao
+int main() {
+    // Alocacao de valores em variaveis locais
     int a = 5;
     int b = 10;
-    int sum = a + b;
-    return sum;
+    
+    // Operacao aritmetica de adicao
+    int soma = a + b;
+    
+    // Retorno do registrador de resultado
+    return soma;
 }`;
 
-            // Create C code editor
             const cEditor = monaco.editor.create(
                 document.getElementById('c-editor'),
                 {
@@ -170,37 +240,42 @@
                     theme: 'vs-dark',
                     automaticLayout: true,
                     wordWrap: 'on',
-                    scrollBeyondLastLine: false
+                    scrollBeyondLastLine: false,
+                    minimap: { enabled: false }
                 }
             );
 
-            // Create assembly output editor (read-only)
             const asmEditor = monaco.editor.create(
                 document.getElementById('asm-editor'),
                 {
-                    value: '',
-                    language: 'ini', // Syntax highlighting for comments and labels
+                    value: '/* O codigo compilado sera exibido neste painel */\n\n// Acione o comando "Compilar para RISC-V" acima.',
+                    language: 'ini', 
                     theme: 'vs-dark',
                     readOnly: true,
                     automaticLayout: true,
                     wordWrap: 'on',
-                    scrollBeyondLastLine: false
+                    scrollBeyondLastLine: false,
+                    minimap: { enabled: false }
                 }
             );
 
-            // State management
-            let asmDecorations = [];     // Decorations for source lines in assembly
-            let activeDecorationsC = []; // Active highlight in C editor
-            let activeDecorationsAsm = []; // Active highlight in assembly editor
+            let asmDecorations = [];
+            let activeDecorationsC = [];
+            let activeDecorationsAsm = [];
 
             // ========================================
             // COMPILATION
             // ========================================
-            document.getElementById('compile-btn').addEventListener('click', handleCompile);
+            const compileBtn = document.getElementById('compile-btn');
+            compileBtn.addEventListener('click', handleCompile);
 
             function handleCompile() {
                 const errorDiv = document.getElementById('error-msg');
                 errorDiv.style.display = 'none';
+                
+                const originalText = compileBtn.innerText;
+                compileBtn.innerText = "Processando...";
+                compileBtn.style.opacity = "0.8";
 
                 const code = cEditor.getValue();
 
@@ -214,7 +289,7 @@
                     .then(async (response) => {
                         const data = await response.json();
                         if (!response.ok) {
-                            throw new Error(data.error || 'Server error occurred');
+                            throw new Error(data.error || 'Erro no processamento do servidor');
                         }
                         return data;
                     })
@@ -226,13 +301,13 @@
                     .catch((error) => {
                         errorDiv.innerText = error.message;
                         errorDiv.style.display = 'block';
+                    })
+                    .finally(() => {
+                        compileBtn.innerText = originalText;
+                        compileBtn.style.opacity = "1";
                     });
             }
 
-            /**
-             * Highlight all source code lines in the assembly output.
-             * These are lines that start with '#'.
-             */
             function highlightSourceLines(assembly) {
                 const lines = assembly.split('\n');
                 const decorations = [];
@@ -258,14 +333,10 @@
             cEditor.onDidChangeCursorPosition(handleCEditorClick);
             asmEditor.onDidChangeCursorPosition(handleAsmEditorClick);
 
-            /**
-             * Handle user click in C editor: highlight corresponding assembly lines.
-             */
             function handleCEditorClick(e) {
                 const cLineNum = e.position.lineNumber;
                 const cText = cEditor.getModel().getLineContent(cLineNum).trim();
 
-                // Ignore empty lines and braces
                 if (!cText || cText === '{' || cText === '}') {
                     clearBidirectionalHighlight();
                     return;
@@ -275,13 +346,10 @@
                 let asmStartLine = -1;
                 let asmEndLine = -1;
 
-                // Find the comment line in assembly that matches C code
                 for (let i = 0; i < asmLines.length; i++) {
                     const lineStr = asmLines[i].trim();
                     if (lineStr === '# ' + cText || lineStr === '#' + cText) {
                         asmStartLine = i + 1;
-
-                        // Block extends from this line to the next comment (or EOF)
                         asmEndLine = asmStartLine;
                         while (
                             asmEndLine < asmLines.length &&
@@ -300,14 +368,11 @@
                 }
             }
 
-            /**
-             * Handle user click in assembly editor: highlight corresponding C line.
-             */
             function handleAsmEditorClick(e) {
                 const asmLineNum = e.position.lineNumber;
                 const asmLines = asmEditor.getModel().getLinesContent();
 
-                if (!asmLines[asmLineNum - 1].trim()) {
+                if (!asmLines || !asmLines[asmLineNum - 1] || !asmLines[asmLineNum - 1].trim()) {
                     clearBidirectionalHighlight();
                     return;
                 }
@@ -316,7 +381,6 @@
                 let asmStartLine = asmLineNum;
                 let asmEndLine = asmLineNum;
 
-                // Scan upward to find the comment this instruction belongs to
                 for (let i = asmLineNum - 1; i >= 0; i--) {
                     const lineStr = asmLines[i].trim();
                     if (lineStr.startsWith('#')) {
@@ -331,7 +395,6 @@
                     return;
                 }
 
-                // Scan downward to find the end of this instruction block
                 while (
                     asmEndLine < asmLines.length &&
                     !asmLines[asmEndLine].trim().startsWith('#')
@@ -339,7 +402,6 @@
                     asmEndLine++;
                 }
 
-                // Find matching C line
                 const cLines = cEditor.getModel().getLinesContent();
                 let cLineNum = -1;
 
@@ -357,9 +419,6 @@
                 }
             }
 
-            /**
-             * Apply bidirectional highlighting to C and assembly editors.
-             */
             function applyBidirectionalHighlight(cLineNumber, asmStartLine, asmEndLine) {
                 activeDecorationsC = cEditor.deltaDecorations(activeDecorationsC, [
                     {
@@ -382,9 +441,6 @@
                 ]);
             }
 
-            /**
-             * Clear all active highlights.
-             */
             function clearBidirectionalHighlight() {
                 activeDecorationsC = cEditor.deltaDecorations(activeDecorationsC, []);
                 activeDecorationsAsm = asmEditor.deltaDecorations(activeDecorationsAsm, []);

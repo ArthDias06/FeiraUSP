@@ -7,20 +7,16 @@
 }
 
 body {
-    margin: 0px;
+    margin: 0;
     padding: 20px;
     background-color: #0b0f19; /* Fundo escuro profundo e tecnológico */
-}
-
-.darkened {
-    filter: brightness(25%);
+    color: #f0f0f0;
 }
 
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: 0.5s;
     padding-bottom: 4rem;
 }
 
@@ -29,17 +25,15 @@ main {
    ============================================ */
 #titulo {
     width: 100%;
-    height: 12rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 2rem;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-bottom: 1rem;
 }
 
 h1 {
     font-size: 2.5rem;
     color: #ffffff;
-    text-align: center;
+    margin: 0 auto;
     max-width: 850px;
     line-height: 1.3;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
@@ -55,7 +49,7 @@ h2 {
 
 h3 {
     font-size: 1.15rem;
-    color: #002d33; /* Cor escura padrão para os títulos dos cards */
+    color: #002d33;
     font-weight: bold;
     margin-top: 0;
     margin-bottom: 0.75rem;
@@ -65,6 +59,14 @@ p {
     color: #f0f0f0;
     line-height: 1.6;
     margin-top: 0;
+}
+
+code {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
 }
 
 /* ============================================
@@ -80,7 +82,33 @@ p {
     box-shadow: 0 8px 32px rgba(74, 0, 224, 0.3);
     display: flex;
     flex-direction: column;
-    align-items: center;
+}
+
+.content p {
+    font-size: 1.05rem;
+}
+
+/* ============================================
+   INSTRUCTION BOX (Destaque Didático)
+   ============================================ */
+.instruction-box {
+    width: 90%;
+    max-width: 1100px;
+    background-color: rgba(0, 229, 255, 0.1);
+    border-left: 5px solid #00e5ff;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 0 8px 8px 0;
+}
+
+.instruction-box h3 {
+    color: #00e5ff;
+    margin-bottom: 0.5rem;
+}
+
+.instruction-box p {
+    margin-bottom: 0;
+    color: #e0f7fa;
 }
 
 /* ============================================
@@ -91,9 +119,11 @@ p {
     border: 1px solid #39ff14;
     border-radius: 6px;
     padding: 0.75rem 2.5rem;
-    margin: 1rem 0 1.5rem 0;
+    margin: 1rem auto 1.5rem auto;
     display: inline-block;
     box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+    align-self: center;
+    text-align: center;
 }
 
 #comando p {
@@ -104,6 +134,13 @@ p {
     font-size: 1.15rem;
 }
 
+.comando-label {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #b3b3b3;
+    margin-bottom: 0.5rem;
+}
+
 /* ============================================
    FLOW SEQUENCES & CARDS (Ciano Neon)
    ============================================ */
@@ -111,7 +148,7 @@ p {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     gap: 0.75rem;
     width: 100%;
     margin-top: 1.5rem;
@@ -120,26 +157,28 @@ p {
 .card {
     background-color: #00e5ff;
     border-radius: 12px;
-    width: 23%; 
+    flex: 1;
     min-width: 170px;
     text-align: center;
     padding: 1.25rem 1rem;
     display: flex;
     flex-direction: column;
-    height: auto; 
     box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
 }
 
 .card h3 {
-    color: #002d33; /* Mantém o contraste escuro por cima do ciano */
+    color: #002d33;
+    border-bottom: 2px solid rgba(0, 45, 51, 0.2);
+    padding-bottom: 0.5rem;
 }
 
 .card p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #001a1f;
     font-weight: 500;
     margin-bottom: 0;
     line-height: 1.5;
+    margin-top: 0.5rem;
 }
 
 .arrow {
@@ -147,6 +186,7 @@ p {
     border-width: 0 4px 4px 0;
     display: inline-block;
     padding: 6px;
+    align-self: center;
 }
 
 .right { 
@@ -154,16 +194,21 @@ p {
 }
 
 /* ============================================
-   FRIEND'S INTERFACE: HEADER & BUTTONS
+   SIMULATOR INTERFACE: HEADER & BUTTONS
    ============================================ */
+.interactive-section {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     gap: 20px;
-    width: 100%; /* Largura total corrigida */
-    padding: 0 10px;
+    width: 100%;
 }
 
 .header h2 {
@@ -171,8 +216,8 @@ p {
 }
 
 .btn {
-    padding: 10px 24px;
-    background-color: #00e5ff; /* Ciano vibrante para combinar com os cards */
+    padding: 12px 28px;
+    background-color: #00e5ff;
     color: #002d33;
     border: none;
     cursor: pointer;
@@ -181,10 +226,14 @@ p {
     border-radius: 8px;
     transition: all 0.2s ease;
     white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
 }
 
 .btn:hover {
     background-color: #00b8d4;
+    transform: translateY(-2px);
 }
 
 .btn:active {
@@ -192,7 +241,7 @@ p {
 }
 
 /* ============================================
-   FRIEND'S INTERFACE: ERROR MESSAGE
+   SIMULATOR INTERFACE: ERROR MESSAGE
    ============================================ */
 #error-msg {
     color: #ff3333;
@@ -211,37 +260,36 @@ p {
 }
 
 /* ============================================
-   FRIEND'S INTERFACE: EDITOR LAYOUT
+   SIMULATOR INTERFACE: EDITOR LAYOUT
    ============================================ */
 .editor-container {
     display: flex;
     gap: 20px;
-    height: 75vh;
-    width: 100%; /* Ocupa toda a largura disponível da tela */
-    padding: 0 10px;
-    margin-bottom: 2.5rem;
+    height: 60vh;
+    width: 100%;
+    margin-bottom: 4rem;
 }
 
 .editor-box {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-width: 0; /* Impede crescimento infinito de largura */
+    min-width: 0;
 }
 
-/* Título de dentro da caixa do editor ganha cor branca para contrastar com o fundo do site */
 .editor-box h3 {
     color: #ffffff; 
+    font-size: 1.1rem;
 }
 
 .editor-wrapper {
     flex: 1;
     position: relative;
-    min-height: 0; /* Impede crescimento infinito de altura */
+    min-height: 0;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     overflow: hidden;
-    background-color: #1a1a1a; /* Fundo interno do editor estilo dark mode */
+    background-color: #1a1a1a;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
 }
 
@@ -256,14 +304,12 @@ p {
 /* ============================================
    HIGHLIGHTING & DECORATIONS
    ============================================ */
-/* Destaque de linha referenciada (Azul Ciano) */
 .highlight-c-line {
     background-color: rgba(0, 229, 255, 0.15);
     border-left: 4px solid #00e5ff;
     font-weight: bold;
 }
 
-/* Destaque ativo (Verde Neon) */
 .highlight-active {
     background-color: rgba(57, 255, 20, 0.15);
     border-left: 4px solid #39ff14;
@@ -277,7 +323,7 @@ p {
     .editor-container {
         flex-direction: column;
         height: auto;
-        min-height: 100vh;
+        min-height: 80vh;
     }
 
     .editor-box {
@@ -293,12 +339,13 @@ p {
         flex-direction: column;
         gap: 1.5rem;
     }
+
     .card {
         width: 100%;
-        max-width: 400px;
     }
+
     .right {
-        transform: rotate(45deg); /* Seta aponta para baixo no mobile */
+        transform: rotate(45deg); 
         margin: 0.25rem 0;
     }
 }
@@ -309,7 +356,7 @@ p {
     }
 
     .btn {
-        padding: 8px 16px;
+        padding: 12px 16px;
         font-size: 14px;
         width: 100%;
         text-align: center;
